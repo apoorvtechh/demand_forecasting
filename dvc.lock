@@ -1,0 +1,139 @@
+schema: '2.0'
+stages:
+  ingest:
+    cmd: python src/data/data_ingestion.py
+    deps:
+    - path: data/raw/
+      hash: md5
+      md5: 79d23d07a02ed33da33b78a4ed98f816.dir
+      size: 5406898803
+      nfiles: 4
+    - path: src/data/data_ingestion.py
+      hash: md5
+      md5: 1a901a4b21f49cff92a86239e1df775d
+      size: 3220
+    outs:
+    - path: ./data/interim/df_cleaned.parquet
+      hash: md5
+      md5: d2a6df0c94a5cfd11ba911f67e58b93f
+      size: 234687964
+  extract_features:
+    cmd: python ./src/features/extract_features.py
+    deps:
+    - path: ./data/interim/df_cleaned.parquet
+      hash: md5
+      md5: d2a6df0c94a5cfd11ba911f67e58b93f
+      size: 234687964
+    - path: ./params.yaml
+      hash: md5
+      md5: 0a6b4f29873edefad8d2113d22eeece1
+      size: 106
+    - path: ./src/features/extract_features.py
+      hash: md5
+      md5: 3eb974fed20c1864ea2359ef79438b61
+      size: 4643
+    params:
+      params.yaml:
+        extract_features.mini_batch_kmeans.batch_size: 10000
+        extract_features.mini_batch_kmeans.n_clusters: 30
+        extract_features.mini_batch_kmeans.random_state: 42
+    outs:
+    - path: ./data/processed/resampled_data.csv
+      hash: md5
+      md5: 70bcea9ea035ce65ec0a8dba1c127556
+      size: 11914755
+    - path: ./models/mb_kmeans.joblib
+      hash: md5
+      md5: e7b79aac11d6e878d348afcb81b89a7f
+      size: 132938487
+    - path: ./models/scaler.joblib
+      hash: md5
+      md5: b03178306a0cfb70d0320ea49eaa16a4
+      size: 951
+  feature_processing:
+    cmd: python ./src/features/feature_processing.py
+    deps:
+    - path: ./data/processed/resampled_data.csv
+      hash: md5
+      md5: 70bcea9ea035ce65ec0a8dba1c127556
+      size: 11914755
+    - path: ./src/features/feature_processing.py
+      hash: md5
+      md5: ebf5a28d0c938958e207f965d72d1e71
+      size: 3592
+    outs:
+    - path: ./data/processed/test.csv
+      hash: md5
+      md5: 1b1ca13ec8a5fddbac5629995dbd9fa2
+      size: 12162619
+    - path: ./data/processed/train.csv
+      hash: md5
+      md5: 41dad42704bdc184167e01efd1b073c4
+      size: 23426968
+  train:
+    cmd: python ./src/models/train_model.py
+    deps:
+    - path: ./data/processed/test.csv
+      hash: md5
+      md5: 1b1ca13ec8a5fddbac5629995dbd9fa2
+      size: 12162619
+    - path: ./data/processed/train.csv
+      hash: md5
+      md5: 41dad42704bdc184167e01efd1b073c4
+      size: 23426968
+    - path: ./models/optuna_hybrid_regionwise_results.csv
+      hash: md5
+      md5: 759c28f18d9f6dbe1e46acd683fd0bc5
+      size: 9400
+    - path: ./src/models/train_model.py
+      hash: md5
+      md5: 283e47a61e3b5f171c487972ea4ddf81
+      size: 5900
+    outs:
+    - path: ./models/training/
+      hash: md5
+      md5: 818a2677b7af3b17504f119f596538b5.dir
+      size: 68907994
+      nfiles: 60
+  evaluate:
+    cmd: python ./src/models/evaluate.py
+    deps:
+    - path: ./data/processed/test.csv
+      hash: md5
+      md5: 1b1ca13ec8a5fddbac5629995dbd9fa2
+      size: 12162619
+    - path: ./models/training/
+      hash: md5
+      md5: 818a2677b7af3b17504f119f596538b5.dir
+      size: 68907994
+      nfiles: 60
+    - path: ./src/models/evaluate.py
+      hash: md5
+      md5: 468979b08f2467aea02faf03dbbea274
+      size: 4692
+    outs:
+    - path: ./models/evaluation/
+      hash: md5
+      md5: 2bf970fbfcfcb26f3e2ebd4cf10e11e0.dir
+      size: 735
+      nfiles: 1
+  optuna_tuning:
+    cmd: python ./src/models/optuna_tuning.py
+    deps:
+    - path: ./data/processed/test.csv
+      hash: md5
+      md5: 1b1ca13ec8a5fddbac5629995dbd9fa2
+      size: 12162619
+    - path: ./data/processed/train.csv
+      hash: md5
+      md5: 41dad42704bdc184167e01efd1b073c4
+      size: 23426968
+    - path: ./src/models/optuna_tuning.py
+      hash: md5
+      md5: a82bcf6ca1e316b1b5d118155aacfb5a
+      size: 6892
+    outs:
+    - path: ./models/optuna_hybrid_regionwise_results.csv
+      hash: md5
+      md5: 759c28f18d9f6dbe1e46acd683fd0bc5
+      size: 9400
