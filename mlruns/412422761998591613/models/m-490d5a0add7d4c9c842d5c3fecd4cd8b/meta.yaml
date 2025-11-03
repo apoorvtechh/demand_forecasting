@@ -1,0 +1,10 @@
+artifact_location: file:///D:/datascience/campusx/PROJECTS/demand_forecasting/mlruns/412422761998591613/models/m-490d5a0add7d4c9c842d5c3fecd4cd8b/artifacts
+creation_timestamp: 1762159363357
+experiment_id: '412422761998591613'
+last_updated_timestamp: 1762159371906
+model_id: m-490d5a0add7d4c9c842d5c3fecd4cd8b
+model_type: null
+name: prophet_region_5
+source_run_id: 9363f47f6c8c47e7bc7afd28509b1b2e
+status: 2
+status_message: null

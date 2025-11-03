@@ -1,0 +1,14 @@
+artifact_uri: file:///D:/datascience/campusx/PROJECTS/demand_forecasting/mlruns/800761580340171398/f0158b47f57e4dc69dade39303ada518/artifacts
+end_time: 1762159777610
+entry_point_name: ''
+experiment_id: '800761580340171398'
+lifecycle_stage: active
+run_id: f0158b47f57e4dc69dade39303ada518
+run_name: Hybrid_Region_27
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762159761147
+status: 3
+tags: []
+user_id: apoor

@@ -137,3 +137,34 @@ stages:
       hash: md5
       md5: 759c28f18d9f6dbe1e46acd683fd0bc5
       size: 9400
+  register_model:
+    cmd: python ./src/models/register_model.py
+    deps:
+    - path: ./models/evaluation/regionwise_mape.csv
+      hash: md5
+      md5: 12ea1f2f92cbe704eeb9d78973ea7e6a
+      size: 735
+    - path: ./models/training/
+      hash: md5
+      md5: 818a2677b7af3b17504f119f596538b5.dir
+      size: 68907994
+      nfiles: 60
+    - path: ./src/models/register_model.py
+      hash: md5
+      md5: 7375c2141ca4692afcd82490091f65e5
+      size: 3934
+  register_scaler_kmeans:
+    cmd: python ./src/models/register_scaler_kmeans.py
+    deps:
+    - path: ./models/mb_kmeans.joblib
+      hash: md5
+      md5: e7b79aac11d6e878d348afcb81b89a7f
+      size: 132938487
+    - path: ./models/scaler.joblib
+      hash: md5
+      md5: b03178306a0cfb70d0320ea49eaa16a4
+      size: 951
+    - path: ./src/models/register_scaler_kmeans.py
+      hash: md5
+      md5: 73694c6a4cd5cc73d05f718411b7ec86
+      size: 2769

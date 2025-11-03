@@ -1,0 +1,19 @@
+artifact_path: file:///D:/datascience/campusx/PROJECTS/demand_forecasting/mlruns/800761580340171398/models/m-4785c56ffc88485390e6d8f976efdb03/artifacts
+flavors:
+  python_function:
+    cloudpickle_version: 3.1.1
+    code: null
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pyfunc.model
+    python_model: python_model.pkl
+    python_version: 3.11.14
+    streamable: false
+mlflow_version: 3.5.1
+model_id: m-4785c56ffc88485390e6d8f976efdb03
+model_size_bytes: 277748
+model_uuid: m-4785c56ffc88485390e6d8f976efdb03
+prompts: null
+run_id: f0158b47f57e4dc69dade39303ada518
+utc_time_created: '2025-11-03 08:49:21.498972'

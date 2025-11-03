@@ -1,0 +1,10 @@
+artifact_location: file:///D:/datascience/campusx/PROJECTS/demand_forecasting/mlruns/141116369751565672/models/m-221360e83bd24d6bbc0c30de92ae1723/artifacts
+creation_timestamp: 1762159786571
+experiment_id: '141116369751565672'
+last_updated_timestamp: 1762159794521
+model_id: m-221360e83bd24d6bbc0c30de92ae1723
+model_type: null
+name: xgboost_region_28
+source_run_id: b2d1880f500840928b6cc92279748a31
+status: 2
+status_message: null

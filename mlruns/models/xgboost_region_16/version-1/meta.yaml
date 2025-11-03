@@ -1,0 +1,15 @@
+creation_timestamp: 1762159594054
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1762159594054
+model_id: m-0a09584ad3be4788857664fe39f85190
+name: xgboost_region_16
+run_id: 0589cb5088a14a5c83d2c44c5b392bdd
+run_link: null
+source: models:/m-0a09584ad3be4788857664fe39f85190
+status: READY
+status_message: null
+storage_location: file:///D:/datascience/campusx/PROJECTS/demand_forecasting/mlruns/110679014883845192/models/m-0a09584ad3be4788857664fe39f85190/artifacts
+user_id: null
+version: 1

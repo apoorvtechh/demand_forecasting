@@ -29,14 +29,6 @@ stages:
     outs:
       - ./data/processed/train.csv
       - ./data/processed/test.csv
-  optuna_tuning:
-    cmd: python ./src/models/optuna_tuning.py
-    deps:
-      - ./src/models/optuna_tuning.py
-      - ./data/processed/train.csv
-      - ./data/processed/test.csv
-    outs:
-      - ./models/optuna_hybrid_regionwise_results.csv
   train:
     cmd: python ./src/models/train_model.py
     deps:
@@ -54,3 +46,15 @@ stages:
       - ./data/processed/test.csv
     outs:
       - ./models/evaluation/
+  register_model:
+    cmd: python ./src/models/register_model.py
+    deps:
+      - ./src/models/register_model.py
+      - ./models/training/
+      - ./models/evaluation/regionwise_mape.csv
+  register_scaler_kmeans:
+    cmd: python ./src/models/register_scaler_kmeans.py
+    deps:
+      - ./src/models/register_scaler_kmeans.py
+      - ./models/scaler.joblib
+      - ./models/mb_kmeans.joblib

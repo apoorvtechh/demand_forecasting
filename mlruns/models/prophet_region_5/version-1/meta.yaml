@@ -1,0 +1,15 @@
+creation_timestamp: 1762159371961
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1762159371961
+model_id: m-490d5a0add7d4c9c842d5c3fecd4cd8b
+name: prophet_region_5
+run_id: 9363f47f6c8c47e7bc7afd28509b1b2e
+run_link: null
+source: models:/m-490d5a0add7d4c9c842d5c3fecd4cd8b
+status: READY
+status_message: null
+storage_location: file:///D:/datascience/campusx/PROJECTS/demand_forecasting/mlruns/412422761998591613/models/m-490d5a0add7d4c9c842d5c3fecd4cd8b/artifacts
+user_id: null
+version: 1
