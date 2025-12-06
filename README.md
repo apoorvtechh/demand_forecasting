@@ -2,10 +2,9 @@
 
 This repository contains the **production-ready forecasting pipeline** for predicting NYC taxi pickup demand at **15-minute granularity**, across **30 dynamically clustered regions**.  
 It is the final, optimized version of the experimentation work completed in the R&D repository.
-**Live Project:**  
-https://apoorvtechh-dashboard-demand-prediction-app-gx2szx.streamlit.app/
 ---
-
+**Live Project:**  
+https://apoorvtechh-dashboard-demand-prediction-app-gx2szx.streamlit.app/ 
 ## 🌟 Project Summary
 
 The system forecasts **future taxi demand** in each NYC region by combining:
