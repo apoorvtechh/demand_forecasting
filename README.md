@@ -14,7 +14,7 @@ The system forecasts **future taxi demand** in each NYC region by combining:
 - **Short-term spike learning**
 - **Hybrid forecasting (Prophet + XGBoost)**
 
-This reduces the error from **0.67 → 0.0301 MAPE**, enabling **95% more accurate** demand predictions.
+This reduces the error from **0.047 → 0.0301 MAPE**, enabling **more accurate** demand predictions.
 
 The project is designed for **scalability, automation, and ML observability** using:
 
