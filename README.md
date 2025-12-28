@@ -1,183 +1,102 @@
-# 🚖 NYC Taxi Demand Forecasting (Region-wise | 15-Min Intervals)
+# NYC Taxi Demand Forecasting (Region-wise | 15-Min Intervals)
 
 This repository contains the **production-ready forecasting pipeline** for predicting NYC taxi pickup demand at **15-minute granularity**, across **30 dynamically clustered regions**.  
-It is the final, optimized version of the experimentation work completed in the R&D repository.
+It represents the final, fully optimized implementation derived from extensive large-scale experimentation and R&D.
 
-**Live Project:**  
-https://apoorvtechh-dashboard-demand-prediction-app-gx2szx.streamlit.app/ 
-## 🌟 Project Summary
-
-The system forecasts **future taxi demand** in each NYC region by combining:
-
-- **Region-wise time-series modeling**
-- **Long-term trend extraction**
-- **Short-term spike learning**
-- **Hybrid forecasting (Prophet + XGBoost)**
-
-This reduces the error from **0.047 → 0.0301 MAPE**, enabling **more accurate** demand predictions.
-
-The project is designed for **scalability, automation, and ML observability** using:
-
-- **DVC** — data versioning & reproducible pipelines  
-- **MLflow** — experiment tracking & model registry  
-- **Per-region model training** — 30 individual models, each optimized  
-- **Fully modular pipeline**— ingestion → clustering → features → training → evaluation  
+**Live Project Dashboard:**  
+https://apoorvtechh-dashboard-demand-prediction-app-gx2szx.streamlit.app/
 
 ---
 
-## 📌 Live Synopsis (Streamlit App)
+## Project Summary
 
-🔗 **https://apoorvtechh-synopsis-dp-app-wxbcw6.streamlit.app/**
+The system forecasts **future NYC taxi pickup demand** independently for each region by combining:
 
-This interactive app showcases:
+- Region-wise time-series modeling  
+- Long-term trend and seasonality extraction  
+- Short-term spike, volatility, and anomaly learning  
+- A hybrid forecasting architecture using **Prophet + XGBoost**
 
-- Dataset exploration  
-- Region clustering visualizations  
-- Feature engineering  
-- Prophet baseline  
-- XGBoost modeling  
-- Hybrid model improvements  
-- Region-wise performance comparison  
+By separating trend learning and residual learning, the system reduces forecasting error from **0.047 → 0.0301 MAPE**, resulting in significantly more accurate, stable, and production-reliable demand predictions.
 
----
+The project is architected for **scalability, automation, reproducibility, and ML observability**, leveraging the following:
 
-## 📚 Experimentation Repository
-
-All initial R&D, notebooks, and experimental modeling are here:
-
-🔗 **https://github.com/apoorvtechh/demand_preidction_experimentation**
-
-This includes:
-
-- 33M-row preprocessing  
-- KMeans region discovery  
-- EWMA optimization  
-- Rolling/lag feature testing  
-- Baseline model comparisons  
-- Hybrid model experiments  
-- Region-wise forecasting behavior  
+- **DVC** for dataset versioning, pipeline orchestration, and full reproducibility  
+- **MLflow** for experiment tracking, metric logging, artifact storage, and model registry  
+- **Per-region model training**, with **30 independently trained and optimized models**  
+- **Fully modular pipeline**, spanning ingestion → spatial clustering → feature engineering → training → evaluation → deployment  
 
 ---
 
-## 🏗️ Production Pipeline Overview
+## Live Synopsis (Streamlit App)
 
-The production system in this repository contains a complete ML workflow:
+https://apoorvtechh-synopsis-dp-app-wxbcw6.streamlit.app/
 
-### **1️⃣ Data Ingestion**
-- Reads raw NYC taxi files
-- Removes coordinate & fare outliers
-- Saves cleaned Parquet for downstream stages
+The interactive synopsis application provides a complete walkthrough of the project, including:
 
-### **2️⃣ Feature Extraction**
-- StandardScaler + MiniBatchKMeans clustering  
-- Assigns region IDs to all 33M pickups  
-- Converts data into 15-minute aggregated time-series  
-- Computes optimal EWMA smoothing per region  
-
-### **3️⃣ Feature Processing**
-- Lag features (`t-1` to `t-4`)  
-- Rolling statistics (mean/std windows: 3 & 6)  
-- Date-based features (day, month)  
-- Train/test creation (Jan–Feb → Train, March → Test)
-
-### **4️⃣ Model Training**
-- Per-region Prophet trend extraction (hourly)  
-- Trend merged into 15-min data  
-- XGBoost model trained with trend + engineered features  
-- All region models saved in `/models/training`
-
-### **5️⃣ Model Evaluation**
-- Region-wise MAPE calculation  
-- Generates final evaluation report in `/models/evaluation`
-
-### **6️⃣ Model Registration (MLflow)**
-- Prophet & XGBoost models logged and versioned  
-- Artifacts stored in remote MLflow backend  
+- Raw dataset exploration and preprocessing overview  
+- NYC geospatial demand distribution and region clustering visualizations  
+- Feature engineering strategy and temporal signal extraction  
+- Prophet-based baseline time-series modeling  
+- XGBoost-based machine learning modeling  
+- Hybrid model integration and step-by-step error reduction analysis  
+- Region-wise performance breakdown and comparative evaluation  
 
 ---
 
-## 🔁 DVC Pipeline (End-to-End Automation)
+## Forecasting Architecture
 
-Every stage of the system runs through DVC:
+The forecasting system follows a hybrid, region-wise architecture designed to capture both global and local demand dynamics.
 
+- **Spatial segmentation:**  
+  NYC is divided into **30 demand regions** using **MiniBatch KMeans clustering** on pickup latitude and longitude, ensuring scalable clustering on 33M+ records.
 
-This ensures:
-- Reproducible machine learning  
-- Version-controlled data and models  
-- Easy dependency tracking  
-- Fully automated retraining  
+- **Temporal resolution:**  
+  Demand is aggregated at **15-minute intervals**, enabling fine-grained, near real-time demand forecasting.
 
----
+- **Trend and seasonality modeling:**  
+  **Prophet** is used to model long-term trends, daily and weekly seasonality, and recurring temporal patterns within each region.
 
-## 📦 Folder Structure (Simplified)
-demand_forecasting/
+- **Residual and spike learning:**  
+  **XGBoost** learns short-term deviations, sudden demand spikes, volatility patterns, and residual errors not captured by Prophet.
 
-│
+- **Final prediction formulation:**  
+  Final demand prediction is computed as:  
+  `Final Demand = Prophet Trend + XGBoost Residual Correction`
 
-├── data/
-
-│   ├── raw/
-
-│   ├── interim/
-
-│   └── processed/
-
-│
-
-├── models/
-
-│   ├── training/
-
-│   └── evaluation/
-
-│
-
-├── src/
-
-│   ├── data/
-
-│   ├── features/
-
-│   ├── models/
-
-│   └── utils/
-
-│
-
-├── dvc.yaml
-
-├── params.yaml
-
-└── README.md
+This separation of responsibilities results in improved robustness during both stable periods and high-volatility demand windows.
 
 ---
 
-## 📈 Final Model Performance
+## Experimentation Repository
 
-| Model | Avg MAPE |
-|-------|----------|
-| Baseline XGBoost | **0.0370** |
-| Hybrid Prophet + XGBoost | **0.0301** |
-| Best Regions | **0.018–0.022 MAPE** |
+All early-stage research, large-scale preprocessing, and model experimentation were conducted separately to maintain a clean production codebase.
 
-The hybrid system consistently outperforms classical ML and time-series models alone.
+https://github.com/apoorvtechh/demand_preidction_experimentation
 
----
+This experimentation repository includes:
 
-## 🎯 Purpose & Real-world Use
-
-This forecasting system helps:
-
-- **Drivers** → move toward hotspots before demand peaks  
-- **Taxi platforms** → reduce wait times & improve fleet distribution  
-- **Cities** → understand mobility patterns & improve transport planning  
-
-The architecture supports **scalable production deployment**, automated retraining, and versioned ML operations.
+- Large-scale preprocessing and aggregation of **33M+ NYC Yellow Taxi trip records**  
+- Exploratory data analysis of temporal, spatial, and seasonal demand patterns  
+- Demand region clustering strategy experiments  
+- Baseline statistical and machine learning forecasting models  
+- Feature engineering iterations, lag analysis, rolling statistics, and ablation studies  
+- Error analysis and model comparison across regions  
 
 ---
 
-## 👨‍💻 Author
+## System Highlights
 
-**Apoorv Gupta**  
-LinkedIn: https://www.linkedin.com/in/apoorv-gupta-32117b226  
+- End-to-end production-grade forecasting pipeline  
+- Region-wise independent model optimization for improved accuracy  
+- Hybrid time-series and machine learning modeling strategy  
+- Reproducible data and model pipelines powered by DVC  
+- Full experiment tracking, artifact management, and model registry using MLflow  
+- Real-time, interactive visualization through Streamlit dashboards  
+- Scalable architecture suitable for urban mobility and ride-hailing platforms  
 
+---
+
+## License
+
+This project is intended for educational, research, and portfolio demonstration purposes.
